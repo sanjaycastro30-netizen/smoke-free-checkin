@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1713">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Smoke-Free">
+<title>Smoke-Free Check-In</title>
+<link rel="manifest" href="manifest.json">
+<style>
+:root{color-scheme:dark;--bg:#0b1713;--panel:#14251e;--panel2:#1a3027;--text:#f1f7f2;--muted:#a8beb0;--green:#9de7b5;--green2:#235b3c;--line:#294437;--red:#ffb7a8}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#1a392b 0%,var(--bg) 58%);color:var(--text);font:16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh;padding:env(safe-area-inset-top) 16px calc(24px + env(safe-area-inset-bottom))}
+main{max-width:520px;margin:0 auto;padding-top:24px}.eyebrow{color:var(--green);font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.top{display:flex;justify-content:space-between;align-items:center;gap:12px}.mark{height:48px;width:48px;border-radius:16px;background:#234c37;display:grid;place-items:center;font-size:25px}.hero{margin:26px 0 20px}.hero h1{font-size:clamp(34px,9vw,48px);line-height:1.02;letter-spacing:-.045em;margin:10px 0}.hero p{color:var(--muted);line-height:1.5;margin:0}.card{background:rgba(20,37,30,.92);border:1px solid var(--line);border-radius:24px;padding:20px;margin:14px 0;box-shadow:0 14px 40px #0002}.streak{display:flex;align-items:center;gap:16px}.flame{font-size:42px}.streak-num{font-size:46px;font-weight:850;letter-spacing:-.05em;line-height:1}.streak-label{color:var(--muted);font-size:13px;margin-top:5px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.stat{background:#0e1d16;border:1px solid #223b2d;padding:12px;border-radius:15px}.stat strong{display:block;font-size:20px}.stat span{font-size:12px;color:var(--muted)}button{font:inherit;cursor:pointer;border:0;border-radius:15px;padding:15px 16px;font-weight:800;width:100%;min-height:52px}.primary{background:var(--green);color:#092014}.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}.danger{background:#40231f;color:var(--red);border:1px solid #704037}.status{padding:14px;border-radius:15px;background:#10291d;border:1px solid #28563b;color:var(--green);line-height:1.45}.status.neutral{background:#101f19;color:var(--muted);border-color:var(--line)}.section-title{font-size:17px;font-weight:800;margin:0 0 10px}.small{font-size:13px;color:var(--muted);line-height:1.5}.quote{font-size:20px;font-weight:750;line-height:1.35;letter-spacing:-.02em}.row{display:flex;gap:10px;align-items:center}.row>*{flex:1}.hidden{display:none!important}footer{text-align:center;color:var(--muted);font-size:12px;line-height:1.5;padding:10px 10px 22px}.linkbtn{background:transparent;color:var(--muted);font-size:13px;text-decoration:underline;padding:8px;min-height:auto}.history{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.day{height:25px;width:25px;border-radius:8px;background:#263a30;display:grid;place-items:center;font-size:11px;color:#8fa897}.day.done{background:#7dd99d;color:#082012;font-weight:800}.day.today{outline:2px solid var(--green);outline-offset:2px}
+</style>
+</head>
+<body>
+<main>
+  <div class="top"><div><div class="eyebrow">One day at a time</div><div class="small" id="todayLabel"></div></div><div class="mark" aria-hidden="true">🌿</div></div>
+  <header class="hero"><h1>Smoke-Free<br>Check-In</h1><p>You don't have to win forever today. Just take care of today.</p></header>
+  <section class="card">
+    <div class="streak"><div class="flame" aria-hidden="true">🔥</div><div><div class="streak-num" id="streak">0</div><div class="streak-label">day smoke-free streak</div></div></div>
+    <div class="stats"><div class="stat"><strong id="total">0</strong><span>smoke-free check-ins</span></div><div class="stat"><strong id="best">0</strong><span>best streak</span></div></div>
+    <div style="margin-top:18px" id="status" class="status neutral">Your next smoke-free day starts with one choice.</div>
+    <div style="margin-top:14px" id="checkinWrap"><button class="primary" id="checkin">✓ I stayed smoke-free today</button></div>
+    <div style="margin-top:10px"><button class="secondary" id="urge">I'm having a craving</button></div>
+  </section>
+  <section class="card">
+    <h2 class="section-title">Your last 7 days</h2><p class="small">Each green square is a day you checked in.</p>
+    <div class="history" id="history"></div>
+  </section>
+  <section class="card" id="cravingCard" hidden>
+    <div class="eyebrow">Craving plan · 10 minutes</div><p class="quote">Delay it. Breathe. Change your surroundings.</p>
+    <ol class="small" style="padding-left:20px;line-height:1.8"><li>Drink a glass of water.</li><li>Take 10 slow breaths.</li><li>Walk for five minutes or chew gum.</li><li>Tell yourself: “I can decide again in 10 minutes.”</li></ol>
+    <button class="secondary" id="closeCraving">I got through this moment</button>
+  </section>
+  <section class="card">
+    <h2 class="section-title">If you slip, come back</h2>
+    <p class="small">A cigarette doesn't erase your progress. Reset the current streak honestly, keep your check-in history, and make the next choice smoke-free.</p>
+    <button class="danger" id="relapse">I smoked — reset my streak</button>
+    <p class="small" style="margin-bottom:0">Resetting is optional and asks for confirmation. Your check-in history stays on this device.</p>
+  </section>
+  <footer>Private by design: your check-ins are stored in this browser on this device. Clearing Safari website data may erase them. This tracker supports your quit attempt; it isn't medical care.</footer>
+</main>
+<script>
+const KEY='smokeFreeCheckin.v1';
+const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
+const fromKey=s=>{const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d,12)};
+const dayKey=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const shift=(s,n)=>{const d=fromKey(s);d.setDate(d.getDate()+n);return dayKey(d)};
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{checks:[],streak:0,best:0,lastCheck:null}}catch(e){return {checks:[],streak:0,best:0,lastCheck:null}}}
+let data=load();
+function save(){localStorage.setItem(KEY,JSON.stringify(data));render()}
+function render(){
+ const t=today(), done=data.checks.includes(t);
+ document.getElementById('todayLabel').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'});
+ document.getElementById('streak').textContent=data.streak;
+ document.getElementById('total').textContent=data.checks.length;
+ document.getElementById('best').textContent=data.best;
+ const status=document.getElementById('status'), btn=document.getElementById('checkin');
+ if(done){status.className='status';status.textContent='Today is checked in. You showed up for yourself — keep going.';btn.textContent='✓ Checked in today';btn.disabled=true;btn.style.opacity='.65'}
+ else{status.className='status neutral';status.textContent='Today is still yours. Make the next choice a smoke-free one.';btn.textContent='✓ I stayed smoke-free today';btn.disabled=false;btn.style.opacity='1'}
+ const hist=document.getElementById('history');hist.innerHTML='';
+ for(let i=6;i>=0;i--){const k=shift(t,-i),el=document.createElement('div');el.className='day'+(data.checks.includes(k)?' done':'')+(k===t?' today':'');el.textContent=fromKey(k).toLocaleDateString(undefined,{weekday:'narrow'});el.title=k+(data.checks.includes(k)?' — checked in':'');hist.appendChild(el)}
+}
+document.getElementById('checkin').addEventListener('click',()=>{
+ const t=today();if(data.checks.includes(t))return;
+ const prev=shift(t,-1);
+ data.streak=data.lastCheck===prev?data.streak+1:1;
+ data.best=Math.max(data.best,data.streak);
+ data.lastCheck=t;data.checks.push(t);save();
+});
+document.getElementById('urge').addEventListener('click',()=>{document.getElementById('cravingCard').hidden=false;document.getElementById('cravingCard').scrollIntoView({behavior:'smooth',block:'center'})});
+document.getElementById('closeCraving').addEventListener('click',()=>{document.getElementById('cravingCard').hidden=true;});
+document.getElementById('relapse').addEventListener('click',()=>{
+ if(!confirm('Reset your current streak to 0? Your saved check-in history and best streak will remain. A slip is not failure.'))return;
+ data.streak=0;data.lastCheck=null;save();
+});
+render();
+if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "name": "Smoke-Free Check-In",
+  "short_name": "Smoke-Free",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0b1713",
+  "theme_color": "#0b1713",
+  "description": "Daily smoke-free check-ins, streaks, and craving support."
+}
